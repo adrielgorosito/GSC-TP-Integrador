@@ -1,5 +1,6 @@
 ﻿using Backend.Domain;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace Backend.DataAccess
 {
@@ -9,5 +10,25 @@ namespace Backend.DataAccess
         public DbSet<Person> People { get; set; }
         public DbSet<Thing> Things { get; set; }
         public DbSet<Loan> Loans { get; set; }
+
+        public LoanDbContext()
+        {
+            this.Database.EnsureDeleted();
+            this.Database.EnsureCreated();
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB; Initial Catalog=LoanDb");
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Person>(p =>
+            {
+                p.HasKey(per => per.Dni);
+                p.Property(per => per.Dni).ValueGeneratedNever();
+            });
+        }
     }
 }
