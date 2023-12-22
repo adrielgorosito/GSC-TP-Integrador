@@ -2,10 +2,10 @@
 {
     public interface IGenericRepository<T> where T : class
     {
-        public T? GetOne(int id);
-        public List<T> GetAll();
-        public T Add(T t);
-        public T Update(T t);
-        public void Delete(int id);
+        public Task<T> GetOne(int id);
+        public Task<List<T>> GetAll();
+        public Task<int> Add(T t);
+        public Task Update(T t);
+        public Task Delete(T t);
     }
 }

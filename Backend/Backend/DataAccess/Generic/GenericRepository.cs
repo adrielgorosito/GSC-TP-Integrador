@@ -1,43 +1,51 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using System.Collections.Generic;
 
 namespace Backend.DataAccess.Generic
 {
     public class GenericRepository<T> : IGenericRepository<T> where T : class, new()
     {
         private LoanDbContext context;
-        private DbSet<T> dbSet;
+        private DbSet<T> DbSet;
 
         public GenericRepository(LoanDbContext context)
         {
             this.context = context;
-            this.dbSet = context.Set<T>();
+            this.DbSet = context.Set<T>();
         }
 
-        public T? GetOne(int id)
+        public virtual async Task<T> GetOne(int id)
         {
-            throw new NotImplementedException();
+            // I use the virtual modifier because it may be necessary to
+            // override the method in a subclass
+            return await DbSet.FindAsync(id);
         }
 
-        public List<T> GetAll()
+        public virtual async Task<List<T>> GetAll()
         {
-            throw new NotImplementedException();
+            return await DbSet.ToListAsync(); ;
         }
 
-
-        public T Add(T t)
+        public virtual async Task<int> Add(T t)
         {
-            throw new NotImplementedException();
+            await DbSet.AddAsync(t);
+            await context.SaveChangesAsync();
+
+            return (int) context.Entry(t).Property("Id").CurrentValue;
         }
 
         
-        public T Update(T t)
+        public virtual async Task Update(T t)
         {
-            throw new NotImplementedException();
+            context.Update(t);
+            await context.SaveChangesAsync();
         }
 
-        public void Delete(int id)
+        public virtual async Task Delete(T t)
         {
-            throw new NotImplementedException();
+            context.Remove(t);
+            await context.SaveChangesAsync();
         }
     }
 }
