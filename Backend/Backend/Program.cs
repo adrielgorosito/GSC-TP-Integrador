@@ -1,6 +1,10 @@
+using Backend.DataAccess;
+
 var builder = WebApplication.CreateBuilder(args);
 var app = builder.Build();
 
-app.MapGet("/", () => "Hello World!");
+using var context = new LoanDbContext();
+
+
 
 app.Run();
