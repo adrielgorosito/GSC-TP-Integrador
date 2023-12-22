@@ -24,7 +24,7 @@ namespace Backend.DataAccess.Generic
 
         public virtual async Task<List<T>?> GetAll()
         {
-            return await DbSet.ToListAsync(); ;
+            return await DbSet.ToListAsync();
         }
 
         public virtual async Task<int> Add(T t)
