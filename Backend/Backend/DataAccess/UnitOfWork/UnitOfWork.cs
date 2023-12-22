@@ -7,19 +7,19 @@ namespace Backend.DataAccess.UnitOfWork
     {
         private LoanDbContext context;
 
-        public CategoryRepository CategoryRepository { get; set; }
-        public LoanRepository LoanRepository { get; set; }
-        public PersonRepository PersonRepository { get; set; }
-        public ThingRepository ThingRepository { get; set; }
+        public CategoriesRepository CategoryRepository { get; set; }
+        public LoansRepository LoanRepository { get; set; }
+        public PeopleRepository PersonRepository { get; set; }
+        public ThingsRepository ThingRepository { get; set; }
 
         public UnitOfWork(LoanDbContext context)
         {
             this.context = context;
 
-            this.CategoryRepository = new CategoryRepository(context);
-            this.LoanRepository = new LoanRepository(context);
-            this.PersonRepository = new PersonRepository(context);
-            this.ThingRepository = new ThingRepository(context);
+            this.CategoryRepository = new CategoriesRepository(context);
+            this.LoanRepository = new LoansRepository(context);
+            this.PersonRepository = new PeopleRepository(context);
+            this.ThingRepository = new ThingsRepository(context);
         }
 
         public void Commit()

@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Backend.DataAccess.Repositories
 {
-    public class LoanRepository : GenericRepository<Loan>
+    public class LoansRepository : GenericRepository<Loan>
     {
-        public LoanRepository(LoanDbContext context) : base(context) { }
+        public LoansRepository(LoanDbContext context) : base(context) { }
 
         public override async Task<Loan?> GetOne(int id)
         {
