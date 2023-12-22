@@ -6,8 +6,8 @@ namespace Backend.DataAccess.Generic
 {
     public class GenericRepository<T> : IGenericRepository<T> where T : class, new()
     {
-        private LoanDbContext context;
-        private DbSet<T> DbSet;
+        protected LoanDbContext context;
+        protected DbSet<T> DbSet;
 
         public GenericRepository(LoanDbContext context)
         {
@@ -15,14 +15,14 @@ namespace Backend.DataAccess.Generic
             this.DbSet = context.Set<T>();
         }
 
-        public virtual async Task<T> GetOne(int id)
+        public virtual async Task<T?> GetOne(int id)
         {
             // I use the virtual modifier because it may be necessary to
             // override the method in a subclass
             return await DbSet.FindAsync(id);
         }
 
-        public virtual async Task<List<T>> GetAll()
+        public virtual async Task<List<T>?> GetAll()
         {
             return await DbSet.ToListAsync(); ;
         }
@@ -33,6 +33,7 @@ namespace Backend.DataAccess.Generic
             await context.SaveChangesAsync();
 
             return (int) context.Entry(t).Property("Id").CurrentValue;
+            // I must override this method in Person cause entity's PK is DNI
         }
 
         

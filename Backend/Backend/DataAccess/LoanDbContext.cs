@@ -13,7 +13,7 @@ namespace Backend.DataAccess
 
         public LoanDbContext()
         {
-            this.Database.EnsureDeleted();
+            // this.Database.EnsureDeleted();
             this.Database.EnsureCreated();
         }
 
@@ -28,6 +28,7 @@ namespace Backend.DataAccess
             {
                 p.HasKey(per => per.Dni);
                 p.Property(per => per.Dni).ValueGeneratedNever();
+                p.Property(per => per.PhoneNumber).HasColumnType("bigint");
             });
         }
     }
