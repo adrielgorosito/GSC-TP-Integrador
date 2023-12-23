@@ -26,6 +26,11 @@ namespace Backend.DataAccess
                 p.Property(per => per.Dni).ValueGeneratedNever();
                 p.Property(per => per.PhoneNumber).HasColumnType("bigint");
             });
+
+            modelBuilder.Entity<Category>(c =>
+            {
+                c.Property(cat => cat.Description).IsRequired();
+            });
         }
     }
 }
