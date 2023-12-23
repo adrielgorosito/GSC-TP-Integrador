@@ -10,7 +10,6 @@ namespace Backend.DataAccess.UnitOfWork
         public ThingsRepository ThingsRepository { get; }
         public LoansRepository LoansRepository { get; }
 
-        void Commit();
-        void Dispose();
+        void SaveChangesAsync();
     }
 }

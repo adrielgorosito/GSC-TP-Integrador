@@ -22,15 +22,9 @@ namespace Backend.DataAccess.UnitOfWork
             this.ThingsRepository = new ThingsRepository(context);
         }
 
-        public void Commit()
+        public void SaveChangesAsync()
         {
-            this.context.SaveChanges();
+            this.context.SaveChangesAsync();
         }
-
-        public void Dispose()
-        {
-            this.context.Dispose();
-        }
-
     }
 }
