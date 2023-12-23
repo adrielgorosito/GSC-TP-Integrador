@@ -11,7 +11,7 @@ namespace Backend.DataAccess
         public DbSet<Thing> Things { get; set; }
         public DbSet<Loan> Loans { get; set; }
 
-        public LoanDbContext()
+        public LoanDbContext(DbContextOptions options) : base(options)
         {
             // this.Database.EnsureDeleted();
             this.Database.EnsureCreated();
