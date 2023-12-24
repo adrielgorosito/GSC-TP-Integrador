@@ -27,11 +27,18 @@ namespace Backend.DataAccess
                 p.Property(per => per.PhoneNumber).HasColumnType("bigint");
             });
 
-            modelBuilder.Entity<Category>()
-                .HasIndex(cat => cat.Description).IsUnique();
+            modelBuilder.Entity<Category>(c =>
+            {
+                c.HasIndex(cat => cat.Description).IsUnique();
+                c.Property(cat => cat.CreationDate).HasDefaultValueSql("CURRENT_TIMESTAMP");
+            });
 
-            modelBuilder.Entity<Thing>()
-                .HasIndex(th => th.Description).IsUnique();
+            modelBuilder.Entity<Thing>(t =>
+            {
+                t.HasIndex(th => th.Description).IsUnique();
+                t.Property(th => th.CreationDate).HasDefaultValueSql("CURRENT_TIMESTAMP");
+            });
+                
         }
     }
 }
