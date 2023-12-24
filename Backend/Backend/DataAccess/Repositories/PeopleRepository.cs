@@ -11,5 +11,13 @@ namespace Backend.DataAccess.Repositories
         {
             return await DbSet.FindAsync(dni);
         }
+
+        public override async Task<int> Add(Person person)
+        {
+            await DbSet.AddAsync(person);
+            await context.SaveChangesAsync();
+
+            return await Task.FromResult(0);
+        }
     }
 }
