@@ -10,9 +10,16 @@ namespace Backend.DataAccess.Repositories
 
         public override async Task<Thing?> GetOne(int id)
         {
-            return await context.Things
+            return await DbSet
                 .Include(t => t.Category)
                 .FirstOrDefaultAsync(t => t.Id == id);
+        }
+
+        public override async Task<List<Thing>?> GetAll()
+        {
+            return await DbSet
+                .Include(t => t.Category)
+                .ToListAsync();
         }
     }
 }
