@@ -27,10 +27,11 @@ namespace Backend.DataAccess
                 p.Property(per => per.PhoneNumber).HasColumnType("bigint");
             });
 
-            modelBuilder.Entity<Category>(c =>
-            {
-                c.Property(cat => cat.Description).IsRequired();
-            });
+            modelBuilder.Entity<Category>()
+                .HasIndex(cat => cat.Description).IsUnique();
+
+            modelBuilder.Entity<Thing>()
+                .HasIndex(th => th.Description).IsUnique();
         }
     }
 }
