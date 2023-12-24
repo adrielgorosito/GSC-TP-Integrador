@@ -39,9 +39,15 @@ namespace Backend.Controllers
         [HttpPost]
         public async Task<ActionResult<int>> AddCategory(Category category)
         {
-            int generatedId = await Uow.CategoriesRepository.Add(category);
-            Uow.SaveChangesAsync();
-            return generatedId;
+            try
+            {
+                int generatedId = await Uow.CategoriesRepository.Add(category);
+                Uow.SaveChangesAsync();
+                return generatedId;
+            } catch (Exception e)
+            {
+                return this.BadRequest("Error: " + e.Message);
+            }
         }
 
         // PUT /api/categories/
@@ -54,7 +60,7 @@ namespace Backend.Controllers
             return this.NoContent();
         }
 
-        // PUT /api/categories/{id}
+        // DELETE /api/categories/{id}
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteCategory(int id)
         {
