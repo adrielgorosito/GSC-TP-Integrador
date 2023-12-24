@@ -6,5 +6,10 @@ namespace Backend.DataAccess.Repositories
     public class PeopleRepository : GenericRepository<Person>
     {
         public PeopleRepository(LoanDbContext context) : base(context) { }
+
+        public override async Task<Person?> GetOne(int dni)
+        {
+            return await DbSet.FindAsync(dni);
+        }
     }
 }
