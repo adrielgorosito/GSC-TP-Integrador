@@ -43,7 +43,11 @@ namespace Backend.DataAccess
                 t.HasData(DataSeeding.Things);
             });
 
-            modelBuilder.Entity<Loan>(l => l.HasData(DataSeeding.Loans));
+            modelBuilder.Entity<Loan>(l =>
+            {
+                l.Property(lo => lo.Status).HasDefaultValue(LoanStatus.Pending);
+                l.HasData(DataSeeding.Loans);
+            });
         }
     }
 }

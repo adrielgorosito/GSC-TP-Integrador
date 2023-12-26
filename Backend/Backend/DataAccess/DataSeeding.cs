@@ -60,15 +60,15 @@ namespace Backend.DataAccess
 
             Loans = new HashSet<dynamic>
             {
-                new { Id = 1, Date = new DateOnly(2023, 12, 1), ReturnDate = new DateOnly(2023, 12, 5), PersonDni = People.First(p => p.Name == "Adriel").Dni, ThingId = Things.First(t => t.Id == 1).Id },
+                new { Id = 1, Date = new DateOnly(2023, 12, 1), ReturnDate = new DateOnly(2023, 12, 3), Status = LoanStatus.Returned, PersonDni = People.First(p => p.Name == "Adriel").Dni, ThingId = Things.First(t => t.Id == 1).Id },
                 new { Id = 2, Date = new DateOnly(2023, 12, 2), PersonDni = People.First(p => p.Name == "Beto").Dni, ThingId = Things.First(t => t.Id == 2).Id },
-                new { Id = 3, Date = new DateOnly(2023, 12, 3), ReturnDate = new DateOnly(2023, 12, 7), PersonDni = People.First(p => p.Name == "Walter").Dni, ThingId = Things.First(t => t.Id == 3).Id },
+                new { Id = 3, Date = new DateOnly(2023, 12, 3), ReturnDate = new DateOnly(2023, 12, 5), Status = LoanStatus.Returned, PersonDni = People.First(p => p.Name == "Walter").Dni, ThingId = Things.First(t => t.Id == 3).Id },
                 new { Id = 4, Date = new DateOnly(2023, 12, 4), PersonDni = People.First(p => p.Name == "Adriel").Dni, ThingId = Things.First(t => t.Id == 4).Id },
                 new { Id = 5, Date = new DateOnly(2023, 12, 5), PersonDni = People.First(p => p.Name == "Beto").Dni, ThingId = Things.First(t => t.Id == 5).Id },
                 new { Id = 6, Date = new DateOnly(2023, 12, 6), PersonDni = People.First(p => p.Name == "Walter").Dni, ThingId = Things.First(t => t.Id == 6).Id },
-                new { Id = 7, Date = new DateOnly(2023, 12, 7), ReturnDate = new DateOnly(2023, 12, 11), PersonDni = People.First(p => p.Name == "Adriel").Dni, ThingId = Things.First(t => t.Id == 7).Id },
+                new { Id = 7, Date = new DateOnly(2023, 12, 7), ReturnDate = new DateOnly(2023, 12, 11), Status = LoanStatus.Returned, PersonDni = People.First(p => p.Name == "Adriel").Dni, ThingId = Things.First(t => t.Id == 7).Id },
                 new { Id = 8, Date = new DateOnly(2023, 12, 8), PersonDni = People.First(p => p.Name == "Beto").Dni, ThingId = Things.First(t => t.Id == 8).Id },
-                new { Id = 9, Date = new DateOnly(2023, 12, 9), ReturnDate = new DateOnly(2023, 12, 13), PersonDni = People.First(p => p.Name == "Walter").Dni, ThingId = Things.First(t => t.Id == 9).Id },
+                new { Id = 9, Date = new DateOnly(2023, 12, 9), ReturnDate = new DateOnly(2023, 12, 20), Status = LoanStatus.ReturnedLate, PersonDni = People.First(p => p.Name == "Walter").Dni, ThingId = Things.First(t => t.Id == 9).Id },
                 new { Id = 10, Date = new DateOnly(2023, 12, 10), PersonDni = People.First(p => p.Name == "Adriel").Dni, ThingId = Things.First(t => t.Id == 2).Id },
             };
         }

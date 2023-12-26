@@ -1,6 +1,7 @@
 ﻿using Backend.DataAccess.UnitOfWork;
 using Backend.Domain;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace Backend.Controllers
 {
@@ -45,6 +46,22 @@ namespace Backend.Controllers
             loan.Thing = thing;
             loan.Person = person;
 
+            if (loan.ReturnDate != null)
+            {
+                DateOnly returnDate = (DateOnly) loan.ReturnDate;
+                int daysDifference = (int)(returnDate.DayNumber - loan.Date.DayNumber);
+
+                Console.WriteLine("Días diff:" + daysDifference);
+
+                if (daysDifference <= 10)
+                    loan.Status = LoanStatus.Returned;
+                else
+                    loan.Status = LoanStatus.ReturnedLate;
+            } else
+                loan.Status = LoanStatus.Pending;
+
+            // This function is very long, consider moving part of it to a "LoansService" Layer
+
             try
             {
                 int id = await Uow.LoansRepository.Add(loan);
@@ -69,6 +86,23 @@ namespace Backend.Controllers
                 return this.BadRequest();
             loan.Thing = thing;
             loan.Person = person;
+
+            if (loan.ReturnDate != null)
+            {
+                DateOnly returnDate = (DateOnly)loan.ReturnDate;
+                int daysDifference = (int)(returnDate.DayNumber - loan.Date.DayNumber);
+
+                Console.WriteLine("Días diff:" + daysDifference);
+
+                if (daysDifference <= 10)
+                    loan.Status = LoanStatus.Returned;
+                else
+                    loan.Status = LoanStatus.ReturnedLate;
+            }
+            else
+                loan.Status = LoanStatus.Pending;
+
+            // This function is very long, consider moving part of it to a "LoansService" Layer
 
             try
             {

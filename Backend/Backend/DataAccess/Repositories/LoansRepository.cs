@@ -25,5 +25,10 @@ namespace Backend.DataAccess.Repositories
                 .Include(l => l.Thing.Category)
                 .ToListAsync();
         }
+
+        //public override async Task ChangeStatus()
+        //{
+
+        //}
     }
 }
