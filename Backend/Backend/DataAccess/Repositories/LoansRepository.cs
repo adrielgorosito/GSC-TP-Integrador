@@ -26,9 +26,9 @@ namespace Backend.DataAccess.Repositories
                 .ToListAsync();
         }
 
-        //public override async Task ChangeStatus()
-        //{
+        public async Task ChangeStatus(Loan loan)
+        {
 
-        //}
+        }
     }
 }

@@ -1,0 +1,17 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "Backend";
+
+package Backend;
+
+service LoanStatusService {
+  rpc ChangeStatus (LoanStatusRequest) returns (LoanStatusResponse);
+}
+
+message LoanStatusRequest {
+  string id = 1;
+}
+
+message LoanStatusResponse {
+  string message = 1;
+}
