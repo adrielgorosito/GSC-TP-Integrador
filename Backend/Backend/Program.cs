@@ -13,17 +13,16 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 builder.Services.AddEndpointsApiExplorer().AddSwaggerGen();
 
-builder.Services.AddGrpc(opt => opt.EnableDetailedErrors = true); // -----------------
-builder.Services.AddGrpcReflection(); // ---------------------------------------------
+builder.Services.AddGrpc(opt => opt.EnableDetailedErrors = true);
+builder.Services.AddGrpcReflection();
 
 var app = builder.Build();
 
 app.UseSwagger();
 app.UseSwaggerUI();
 
-app.MapGrpcService<LoansService>();      // ---------------------------------------------
-app.MapGrpcReflectionService(); // ---------------------------------------------
-app.MapGet("/api/loan/change", () => "Communication with gRPC endpoints must be made through a gRPC client. To learn how to create a client, visit: https://go.microsoft.com/fwlink/?linkid=2086909");
+app.MapGrpcService<LoansService>();
+app.MapGrpcReflectionService();
 
 app.MapControllers();
 app.Run();
