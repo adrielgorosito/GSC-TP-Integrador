@@ -50,7 +50,7 @@ namespace Backend.Controllers
             }
         }
 
-        // PUT /api/categories/
+        // PUT /api/categories
         [HttpPut]
         public async Task<ActionResult> UpdateCategory(Category category)
         {

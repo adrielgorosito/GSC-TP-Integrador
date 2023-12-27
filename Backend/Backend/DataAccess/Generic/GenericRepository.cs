@@ -17,8 +17,6 @@ namespace Backend.DataAccess.Generic
 
         public virtual async Task<T?> GetOne(int id)
         {
-            // I use the virtual modifier because it may be necessary to
-            // override the method in a subclass
             return await DbSet.FindAsync(id);
         }
 
@@ -32,11 +30,9 @@ namespace Backend.DataAccess.Generic
             await DbSet.AddAsync(t);
             await context.SaveChangesAsync();
 
-            return (int) context.Entry(t).Property("Id").CurrentValue;
-            // I must override this method in Person cause entity's PK is DNI
+            return (int) context.Entry(t).Property("Id").CurrentValue!;
         }
 
-        
         public virtual async Task Update(T t)
         {
             context.ChangeTracker.Clear();

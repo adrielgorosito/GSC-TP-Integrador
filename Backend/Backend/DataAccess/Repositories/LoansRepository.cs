@@ -25,10 +25,5 @@ namespace Backend.DataAccess.Repositories
                 .Include(l => l.Thing.Category)
                 .ToListAsync();
         }
-
-        public async Task ChangeStatus(Loan loan)
-        {
-
-        }
     }
 }

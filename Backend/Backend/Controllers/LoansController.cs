@@ -36,31 +36,14 @@ namespace Backend.Controllers
 
         // POST api/loans
         [HttpPost]
-        public async Task<ActionResult<int>> AddLoan(Loan loan)
+        public async Task<ActionResult<int>> AddLoan(Loan loanToAdd)
         {
-            var thing = await Uow.ThingsRepository.GetOne(loan.Thing.Id);
-            var person = await Uow.PeopleRepository.GetOne(loan.Person.Dni);
+            var (success, loan) = await CheckIfThingAndPersonExists(loanToAdd);
 
-            if (thing == null || person == null)
+            if (!success)
                 return this.BadRequest();
-            loan.Thing = thing;
-            loan.Person = person;
 
-            if (loan.ReturnDate != null)
-            {
-                DateOnly returnDate = (DateOnly) loan.ReturnDate;
-                int daysDifference = (int)(returnDate.DayNumber - loan.Date.DayNumber);
-
-                Console.WriteLine("Días diff:" + daysDifference);
-
-                if (daysDifference <= 10)
-                    loan.Status = LoanStatus.Returned;
-                else
-                    loan.Status = LoanStatus.ReturnedLate;
-            } else
-                loan.Status = LoanStatus.Pending;
-
-            // This function is very long, consider moving part of it to a "LoansService" Layer
+            loan.Status = setStatus(loan);
 
             try
             {
@@ -72,37 +55,18 @@ namespace Backend.Controllers
             {
                 return this.BadRequest("Error: " + e.Message);
             }
-
         }
 
         // PUT api/loans
         [HttpPut]
-        public async Task<ActionResult> UpdateLoan(Loan loan)
+        public async Task<ActionResult> UpdateLoan(Loan loanToUpdate)
         {
-            var thing = await Uow.ThingsRepository.GetOne(loan.Thing.Id);
-            var person = await Uow.PeopleRepository.GetOne(loan.Person.Dni);
+            var (success, loan) = await CheckIfThingAndPersonExists(loanToUpdate);
 
-            if (thing == null || person == null)
+            if (!success)
                 return this.BadRequest();
-            loan.Thing = thing;
-            loan.Person = person;
 
-            if (loan.ReturnDate != null)
-            {
-                DateOnly returnDate = (DateOnly)loan.ReturnDate;
-                int daysDifference = (int)(returnDate.DayNumber - loan.Date.DayNumber);
-
-                Console.WriteLine("Días diff:" + daysDifference);
-
-                if (daysDifference <= 10)
-                    loan.Status = LoanStatus.Returned;
-                else
-                    loan.Status = LoanStatus.ReturnedLate;
-            }
-            else
-                loan.Status = LoanStatus.Pending;
-
-            // This function is very long, consider moving part of it to a "LoansService" Layer
+            loan.Status = this.setStatus(loan);
 
             try
             {
@@ -114,7 +78,6 @@ namespace Backend.Controllers
             {
                 return this.BadRequest("Error: " + e.Message);
             }
-
         }
 
         // DELETE api/loans/{id}
@@ -129,6 +92,33 @@ namespace Backend.Controllers
             await Uow.LoansRepository.Delete(loan);
             Uow.SaveChangesAsync();
             return this.NoContent();
+        }
+
+        public async Task<(bool Success, Loan Loan)> CheckIfThingAndPersonExists(Loan loan)
+        {
+            var thing = await Uow.ThingsRepository.GetOne(loan.Thing.Id);
+            var person = await Uow.PeopleRepository.GetOne(loan.Person.Dni);
+
+            if (thing == null || person == null)
+                return (false, null);
+
+            loan.Thing = thing;
+            loan.Person = person;
+
+            return (true, loan);
+        }
+
+        public LoanStatus setStatus(Loan loan)
+        {
+            if (loan.ReturnDate == null)
+                return LoanStatus.Pending;
+            DateOnly returnDate = (DateOnly)loan.ReturnDate;
+            int daysDifference = (int)(returnDate.DayNumber - loan.Date.DayNumber);
+
+            if (daysDifference <= 10)
+                return LoanStatus.Returned;
+            else
+                return LoanStatus.ReturnedLate;
         }
     }
 }
