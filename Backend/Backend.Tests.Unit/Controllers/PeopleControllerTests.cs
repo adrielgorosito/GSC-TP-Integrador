@@ -189,5 +189,108 @@ namespace Backend.Tests.Unit.Controllers
                 actual.Should().BeOfType<NotFoundResult>();
             }
         }
+        public class TheMethod_AddPerson : PeopleControllerTests
+        {
+            [Fact]
+            public async Task Should_add_person_successfully()
+            {
+                // arrange
+                await this.InitAsync();
+                var newPerson = new Person() { Dni = 4, Name = "Luciano", PhoneNumber = "555", EmailAddress = "diamand@g.com" };
+
+                // act
+                ActionResult actual = await this.sut.AddPerson(newPerson);
+
+                // assert
+                actual.Should().BeOfType<NoContentResult>();
+
+                this.Dispose();
+            }
+
+            [Fact]
+            public async Task Should_return_error_BadRequest_when_dni_already_exists()
+            {
+                // arrange
+                await this.InitAsync();
+                var duplicatePerson = new Person() { Dni = 1, Name = "GSC", PhoneNumber = "999", EmailAddress = "gsc@g.com" };
+
+                // act
+                ActionResult actual = await this.sut.AddPerson(duplicatePerson);
+
+                // assert
+                actual.Should().BeOfType<BadRequestObjectResult>();
+
+                this.Dispose();
+            }
+        }
+
+        public class TheMethod_UpdatePerson : PeopleControllerTests
+        {
+            [Fact]
+            public async Task Should_update_person_successfully()
+            {
+                // arrange
+                await this.InitAsync();
+                var updatedPerson = new Person() { Dni = 1, Name = "Gorosito", PhoneNumber = "777", EmailAddress = "gorosito@g.com" };
+
+                // act
+                ActionResult actual = await this.sut.UpdatePerson(updatedPerson);
+
+                // assert
+                actual.Should().BeOfType<NoContentResult>();
+
+                this.Dispose();
+            }
+
+            [Fact]
+            public async Task Should_return_NotFound_when_person_does_not_exists()
+            {
+                // arrange
+                await this.InitAsync();
+                var nonExistingPerson = new Person() { Dni = 100, Name = "NonExistingPerson", PhoneNumber = "000", EmailAddress = "error@g.com" };
+
+                // act
+                ActionResult actual = await this.sut.UpdatePerson(nonExistingPerson);
+
+                // assert
+                actual.Should().BeOfType<NotFoundResult>();
+
+                this.Dispose();
+            }
+        }
+
+        public class TheMethod_DeletePerson : PeopleControllerTests
+        {
+            [Fact]
+            public async Task Should_delete_person_successfully()
+            {
+                // arrange
+                await this.InitAsync();
+
+                // act
+                ActionResult actual = await this.sut.DeletePerson(1);
+
+                // assert
+                actual.Should().BeOfType<NoContentResult>();
+
+                this.Dispose();
+            }
+
+            [Fact]
+            public async Task Should_return_NotFound_when_person_does_not_exists()
+            {
+                // arrange
+                await this.InitAsync();
+
+                // act
+                ActionResult actual = await this.sut.DeletePerson(100);
+
+                // assert
+                actual.Should().BeOfType<NotFoundResult>();
+
+                this.Dispose();
+            }
+        }
+
     }
 }
