@@ -39,6 +39,7 @@ namespace Backend.DataAccess.Generic
         
         public virtual async Task Update(T t)
         {
+            context.ChangeTracker.Clear();
             context.Update(t);
             await context.SaveChangesAsync();
         }

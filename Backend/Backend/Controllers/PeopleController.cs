@@ -53,6 +53,11 @@ namespace Backend.Controllers
         [HttpPut]
         public async Task<ActionResult> UpdatePerson(Person person)
         {
+            var personDb = await Uow.PeopleRepository.GetOne(person.Dni);
+
+            if (personDb == null)
+                return this.NotFound();
+
             await Uow.PeopleRepository.Update(person);
             Uow.SaveChangesAsync();
 
