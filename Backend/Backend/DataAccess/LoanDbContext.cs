@@ -1,6 +1,8 @@
 ﻿using Backend.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Microsoft.Extensions.Options;
 
 namespace Backend.DataAccess
 {
@@ -15,40 +17,46 @@ namespace Backend.DataAccess
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (!optionsBuilder.IsConfigured)
+            if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development")
                 optionsBuilder.UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB; Initial Catalog=LoanDb");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            DataSeeding DataSeeding = new DataSeeding();
-
             modelBuilder.Entity<Person>(p =>
             {
                 p.HasKey(per => per.Dni);
                 p.Property(per => per.Dni).ValueGeneratedNever();
-                p.HasData(DataSeeding.People);
             });
 
             modelBuilder.Entity<Category>(c =>
             {
                 c.HasIndex(cat => cat.Description).IsUnique();
                 c.Property(cat => cat.CreationDate).HasDefaultValueSql("CURRENT_TIMESTAMP");
-                c.HasData(DataSeeding.Categories);
             });
 
             modelBuilder.Entity<Thing>(t =>
             {
                 t.HasIndex(th => th.Description).IsUnique();
                 t.Property(th => th.CreationDate).HasDefaultValueSql("CURRENT_TIMESTAMP");
-                t.HasData(DataSeeding.Things);
             });
 
             modelBuilder.Entity<Loan>(l =>
             {
                 l.Property(lo => lo.Status).HasDefaultValue(LoanStatus.Pending);
-                l.HasData(DataSeeding.Loans);
             });
+
+            if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development")
+            {
+                // Data seeding will only be done if we are in a development environment
+                // The reason is not to interfere with testing
+                DataSeeding DataSeeding = new DataSeeding();
+
+                modelBuilder.Entity<Person>().HasData(DataSeeding.People);
+                modelBuilder.Entity<Category>().HasData(DataSeeding.Categories);
+                modelBuilder.Entity<Thing>().HasData(DataSeeding.Things);
+                modelBuilder.Entity<Loan>().HasData(DataSeeding.Loans);
+            }
         }
     }
 }

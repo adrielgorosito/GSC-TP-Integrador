@@ -19,6 +19,8 @@ namespace Backend.Tests.Unit.Controllers
 
         public PeopleControllerTests()
         {
+            Environment.SetEnvironmentVariable("ASPNETCORE_ENVIRONMENT", "Testing");
+            
             this.connection.Open();
             var options = new DbContextOptionsBuilder().UseSqlite(this.connection).Options;
             this.context = new LoanDbContext(options);
@@ -79,6 +81,24 @@ namespace Backend.Tests.Unit.Controllers
                 // assert
                 actual.Result.Should().BeOfType<NotFoundResult>();
                 actual.Value.Should().BeNull();
+
+                this.Dispose();
+            }
+        }
+
+        public class TheMethod_GetPeople() : PeopleControllerTests
+        {
+            [Fact]
+            public async Task Should_return_all_three_init_people()
+            {
+                // arrange
+                await this.InitAsync();
+
+                // act
+                ActionResult<List<Person>?> actual = await this.sut.GetPeople();
+
+                // assert
+                actual.Value.Should().HaveCount(3);
 
                 this.Dispose();
             }
