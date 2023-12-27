@@ -15,7 +15,8 @@ namespace Backend.DataAccess
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB; Initial Catalog=LoanDb");
+            if (!optionsBuilder.IsConfigured)
+                optionsBuilder.UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB; Initial Catalog=LoanDb");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
