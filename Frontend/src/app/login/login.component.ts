@@ -3,7 +3,13 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { User } from '../user';
 import { UserService } from '../user.service';
 import { PersonService } from '../person.service';
-import { Person } from '../person';
+import {
+  Router,
+  RouterLink,
+  RouterLinkActive,
+  RouterOutlet,
+} from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-login',
@@ -14,11 +20,10 @@ export class LoginComponent {
   constructor(
     private fb: FormBuilder,
     private us: UserService,
-    private ps: PersonService
+    private ps: PersonService,
+    private router: Router
   ) {}
   // borrar personService, eso se haría en otro .ts
-
-  error: boolean = false;
 
   loginForm = this.fb.group({
     user: ['', Validators.required],
@@ -27,21 +32,19 @@ export class LoginComponent {
 
   submit() {
     if (!this.loginForm.invalid) {
-      const u = new User(
-        this.loginForm.get('user')!.value!,
-        this.loginForm.get('password')!.value!
+      const username = this.loginForm.get('user')!.value!;
+      const password = this.loginForm.get('password')!.value!;
+
+      this.us.getToken(username, password).subscribe(
+        (token: string) => {
+          // guardar token
+          this.router.navigate(['/people-crud']);
+        },
+        (error) => {
+          console.error('Error al obtener el token:', error);
+          this.router.navigate(['/error-crud']);
+        }
       );
-
-      const observer = {
-        next: (people: Person[]) => {
-          console.log('Personas obtenidas:', people);
-        },
-        error: (obsError: string) => {
-          console.error('Error al obtener personas:', obsError);
-        },
-      };
-
-      this.ps.getAllPeople().subscribe(observer);
     }
   }
 }
