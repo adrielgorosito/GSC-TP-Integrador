@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { User } from './user';
 
 @Injectable({
   providedIn: 'root',
@@ -10,8 +11,8 @@ export class UserService {
 
   private loginUrl = 'http://localhost:5000/api/accounts/login';
 
-  public getToken(username: string, password: string): Observable<string> {
-    const credentials = { username, password };
+  public getToken(user: User): Observable<string> {
+    const credentials = { username: user.user, password: user.password };
     return this.http.post(this.loginUrl, credentials, { responseType: 'text' });
   }
 }
