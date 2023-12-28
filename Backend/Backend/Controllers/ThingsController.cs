@@ -1,11 +1,13 @@
 ﻿using Backend.DataAccess.UnitOfWork;
 using Backend.Domain;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.Controllers
 {
     [ApiController]
-    [Route("/api/[controller]")]
+    [Authorize]
+    [Route("api/[controller]")]
     public class ThingsController : ControllerBase
     {
         private IUnitOfWork Uow;
@@ -52,7 +54,6 @@ namespace Backend.Controllers
             {
                 return this.BadRequest("Error: " + e.Message);
             }
-            
         }
 
         // PUT api/things
@@ -74,7 +75,6 @@ namespace Backend.Controllers
             {
                 return this.BadRequest("Error: " + e.Message);
             }
-            
         }
 
         // DELETE api/things/{id}

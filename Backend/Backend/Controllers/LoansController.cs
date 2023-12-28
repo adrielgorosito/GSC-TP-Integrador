@@ -1,11 +1,12 @@
 ﻿using Backend.DataAccess.UnitOfWork;
 using Backend.Domain;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
 
 namespace Backend.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("api/[controller]")]
     public class LoansController : ControllerBase
     {
@@ -94,6 +95,7 @@ namespace Backend.Controllers
             return this.NoContent();
         }
 
+        [NonAction]
         public async Task<(bool Success, Loan Loan)> CheckIfThingAndPersonExists(Loan loan)
         {
             var thing = await Uow.ThingsRepository.GetOne(loan.Thing.Id);
@@ -108,6 +110,7 @@ namespace Backend.Controllers
             return (true, loan);
         }
 
+        [NonAction]
         public LoanStatus setStatus(Loan loan)
         {
             if (loan.ReturnDate == null)

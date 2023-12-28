@@ -1,12 +1,12 @@
-﻿using Backend.DataAccess;
-using Backend.DataAccess.UnitOfWork;
+﻿using Backend.DataAccess.UnitOfWork;
 using Backend.Domain;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace Backend.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("api/[controller]")]
     public class CategoriesController : ControllerBase
     {

@@ -1,11 +1,13 @@
 ﻿using Backend.DataAccess.UnitOfWork;
 using Backend.Domain;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.Controllers
 {
     [ApiController]
-    [Route("/api/[controller]")]
+    [Authorize]
+    [Route("api/[controller]")]
     public class PeopleController : ControllerBase
     {
         private readonly IUnitOfWork Uow;
@@ -49,7 +51,7 @@ namespace Backend.Controllers
             }
         }
 
-        // PUT /api/people/
+        // PUT /api/people
         [HttpPut]
         public async Task<ActionResult> UpdatePerson(Person person)
         {
