@@ -1,17 +1,25 @@
 import { Injectable } from '@angular/core';
 import { Person } from './person';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable, switchMap } from 'rxjs';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PersonService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private us: UserService) {}
 
-  private urlBackend = 'http://localhost:5000/api/people';
+  private apiPeople = 'http://localhost:5000/api/people';
 
-  getAllPeople(): Observable<Person[]> {
-    return this.http.get<Person[]>(`${this.urlBackend}`);
+  public getAllPeople(): Observable<Person[]> {
+    return this.us.getToken('admin', '12345').pipe(
+      switchMap((tokenResponse: string) => {
+        const headers = new HttpHeaders({
+          Authorization: `Bearer ${tokenResponse}`,
+        });
+        return this.http.get<Person[]>(this.apiPeople, { headers });
+      })
+    );
   }
 }
