@@ -1,1 +1,29 @@
-<p>people-crud works!</p>
+<div class="center-container">
+  <div class="container">
+    <h2>Welcome</h2>
+
+    <table class="table spaced-table">
+      <thead>
+        <tr>
+          <th>DNI</th>
+          <th>Name</th>
+          <th>Phone Number</th>
+          <th>Email Address</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let person of people">
+          <td>{{ person.dni }}</td>
+          <td>{{ person.name }}</td>
+          <td>{{ person.phoneNumber }}</td>
+          <td>{{ person.emailAddress }}</td>
+          <td>
+            <button (click)="updatePerson(person)">Update</button>
+            <button (click)="deletePerson(person)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
