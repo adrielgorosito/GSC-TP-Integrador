@@ -1,0 +1,55 @@
+<div class="center-container">
+  <form class="container" [formGroup]="loginForm">
+    <h1>Login</h1>
+
+    <div class="form-group">
+      <label>User: </label>
+      <input type="text" formControlName="user" />
+    </div>
+
+    <div class="form-group">
+      <label>Password: </label>
+      <input type="password" formControlName="password" />
+    </div>
+
+    <!-- <div class="form-group">
+      <label>Confirmar email: </label>
+      <input
+        type="email"
+        formControlName="emailConfirm"
+        [ngClass]="{
+          errorCSS:
+            registroForm.get('emailConfirm')!.value !==
+              registroForm.get('email')!.value &&
+            registroForm.get('emailConfirm')!.touched
+        }"
+      />
+    </div> -->
+
+    <!-- <p
+      align="center"
+      style="color: red"
+      *ngIf="
+        registroForm.get('emailConfirm')!.value !==
+          registroForm.get('email')!.value &&
+        registroForm.get('emailConfirm')!.touched
+      "
+    >
+      Los emails ingresados no coinciden
+    </p> -->
+    <!-- 
+
+    <div align="center">
+      <button
+        (click)="submit()"
+        onclick="alert('Suscripción exitosa. Revise la consola.')"
+        [disabled]="registroForm.invalid || !checkForm()"
+      >
+        Enviar
+      </button>
+    </div> -->
+    <div align="center">
+      <button (click)="submit()">Enviar</button>
+    </div>
+  </form>
+</div>
