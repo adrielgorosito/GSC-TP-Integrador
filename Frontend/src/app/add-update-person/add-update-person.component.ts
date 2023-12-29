@@ -16,9 +16,36 @@ export class AddUpdatePersonComponent {
     private ps: PersonService
   ) {}
 
+  submitButtonText: string = 'Add';
+  protected isUpdate = false;
+
   ngOnInit() {
     if (localStorage.getItem('token') == null)
       this.router.navigate(['/error-crud']);
+
+    const state = this.router.lastSuccessfulNavigation;
+
+    if (
+      state &&
+      state.extras &&
+      state.extras.state &&
+      state.extras.state['data']
+    ) {
+      const person: Person = state.extras.state['data'];
+      this.newPersonForm.patchValue({
+        dni: person.dni.toString(),
+        name: person.name,
+        phoneNumber: person.phoneNumber,
+        emailAddress: person.emailAddress,
+      });
+
+      this.newPersonForm.get('dni')!.disable();
+      this.submitButtonText = 'Update';
+      this.isUpdate = true;
+    } else {
+      this.submitButtonText = 'Add';
+      this.isUpdate = false;
+    }
   }
 
   newPersonForm = this.fb.group({
@@ -38,7 +65,8 @@ export class AddUpdatePersonComponent {
       this.newPersonForm.get('emailAddress')!.value!
     );
 
-    this.addPerson(person);
+    if (this.isUpdate) this.updatePerson(person);
+    else this.addPerson(person);
   }
 
   private addPerson(person: Person) {
@@ -51,7 +79,6 @@ export class AddUpdatePersonComponent {
       },
       error: (error: any) => {
         console.error('Error adding person:', error);
-        // I should return to a new component "methodError"
       },
     };
     this.ps.addPerson(person).subscribe(observer);
@@ -63,13 +90,14 @@ export class AddUpdatePersonComponent {
 
     const observer = {
       next: (data: Person) => {
-        // apply logic
         const updatedPerson: Person = data;
+        this.router.navigate(['/people-crud']);
       },
       error: (error: any) => {
         console.error('Error updating person:', error);
       },
     };
+    this.ps.updatePerson(person).subscribe(observer);
   }
 
   protected goBack() {

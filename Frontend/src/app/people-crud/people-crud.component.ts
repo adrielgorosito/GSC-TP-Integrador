@@ -28,6 +28,7 @@ export class PeopleCRUDComponent {
     const observer = {
       next: (data: Person[]) => {
         this.people = data;
+        if (this.people.length == 0) this.listPeople = false;
       },
       error: (error: any) => {
         console.error('Error fetching people:', error);
@@ -105,8 +106,12 @@ export class PeopleCRUDComponent {
     );
   }
 
-  goToAddUpdate() {
-    this.router.navigate(['/add-update-person']);
+  goToAddUpdate(person?: Person) {
+    if (person) {
+      this.router.navigate(['/add-update-person'], { state: { data: person } });
+    } else {
+      this.router.navigate(['/add-update-person']);
+    }
   }
 
   logout() {

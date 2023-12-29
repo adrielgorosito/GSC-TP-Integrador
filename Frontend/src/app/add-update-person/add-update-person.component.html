@@ -61,12 +61,16 @@
     <div align="center">
       <button
         (click)="submit()"
-        [disabled]="this.newPersonForm.invalid"
-        style="margin-right: 20px"
+        [disabled]="newPersonForm.invalid"
+        style="margin-right: 20px; width: 100px"
       >
-        Add
+        {{ submitButtonText }}
       </button>
-      <button (click)="goBack()" style="background-color: #ff8b97">
+
+      <button
+        (click)="goBack()"
+        style="background-color: #ff8b97; width: 100px"
+      >
         Go back
       </button>
     </div>
