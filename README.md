@@ -29,6 +29,25 @@ Finalmente opté por usar el modelo de dominio propuesto, agregándole a cada en
 -	Implementar Logging en archivos.
 -	Implementar Automapper.
 
+### Imágenes de la aplicación
+*Login*
+- Usuario: **admin**
+- Contraseña: **12345**
+
+![imagen](https://github.com/adrielgorosito/GSC-TP-Integrador/assets/70348592/c3f1e953-2720-4c94-a781-bb5fd48a8da7)
+
+*Lista de personas*
+
+![imagen](https://github.com/adrielgorosito/GSC-TP-Integrador/assets/70348592/59020acc-29f5-4e86-bd1f-f618b20f631f)
+
+*Click en borrar o en búsqueda por dni*
+
+![imagen](https://github.com/adrielgorosito/GSC-TP-Integrador/assets/70348592/cfdffadd-6b0d-4e37-a119-ef27a75e1402)
+
+*Agregar nueva persona*
+
+![imagen](https://github.com/adrielgorosito/GSC-TP-Integrador/assets/70348592/42e9c332-3395-4cb1-bd7a-38f02bde7a6c)
+
 ## El curso
 Fueron 20 clases sincrónicas (de 3 horas cada una) y dos meses y medio de mucho aprendizaje. 
 En lo personal, completar este curso fue muy desafiente, más que nada por las últimas semanas de cursado y la junta de parciales. 
@@ -41,7 +60,10 @@ Por el arduo trabajo que hicieron y por la predisposición a lo largo del curso.
 También, quiero darle las gracias a los profesores Andrés Otaduy y Patricio Cullen (a quién también tuve en la asignatura "Metodologías ágiles") por las dos clases magistrales que dieron de Angular y Scrum respectivamente. <br>
 Por último, agradecer a Julieta Valenzuela, de Personal y Bienestar, quién estuvo siempre atenta a nuestras inquietudes y nos trató con mucho cariño cada vez que fuimos al edificio del Grupo San Cristóbal.
 
-## Tecnologías vistas a lo largo del curso
+### Repositorio del cursado
+https://github.com/adrielgorosito/GSC-curso-practica
+
+### Tecnologías vistas a lo largo del curso
 <div align="center">
   <code><img width="50" src="https://user-images.githubusercontent.com/25181517/117447155-6a868a00-af3d-11eb-9cfe-245df15c9f3f.png" alt="JavaScript" title="JavaScript"/></code>
   <code><img width="50" src="https://user-images.githubusercontent.com/25181517/183890598-19a0ac2d-e88a-4005-a8df-1ee36782fde1.png" alt="TypeScript" title="TypeScript"/></code>
@@ -54,6 +76,5 @@ Por último, agradecer a Julieta Valenzuela, de Personal y Bienestar, quién est
 	<code><img width="50" src="https://user-images.githubusercontent.com/25181517/192107858-fe19f043-c502-4009-8c47-476fc89718ad.png" alt="REST" title="REST"/></code>
 	<code><img width="50" src="https://user-images.githubusercontent.com/25181517/186711335-a3729606-5a78-4496-9a36-06efcc74f800.png" alt="Swagger" title="Swagger"/></code>
 	<code><img width="50" src="https://user-images.githubusercontent.com/25181517/192109061-e138ca71-337c-4019-8d42-4792fdaa7128.png" alt="Postman" title="Postman"/></code>
-  <code><img width="50" src="https://user-images.githubusercontent.com/25181517/192107855-e669c777-9172-49c5-b7e0-404e29df0fee.png" alt="gRPC" title="gRPC"/></code>
-  
+  <code><img width="50" src="https://user-images.githubusercontent.com/25181517/192107855-e669c777-9172-49c5-b7e0-404e29df0fee.png" alt="gRPC" title="gRPC"/></code>  
 </div>
