@@ -1,0 +1,91 @@
+<div class="center-container">
+  <form class="container" [formGroup]="newPersonForm">
+    <h2>New person</h2>
+
+    <div class="form-group">
+      <label>Dni: </label>
+      <input
+        class="input-field"
+        type="text"
+        formControlName="dni"
+        [ngClass]="{
+          errorCSS:
+            newPersonForm.get('dni')!.touched &&
+            newPersonForm.get('dni')!.value === ''
+        }"
+      />
+    </div>
+
+    <div class="form-group">
+      <label>Name: </label>
+      <input
+        class="input-field"
+        type="text"
+        formControlName="name"
+        [ngClass]="{
+          errorCSS:
+            newPersonForm.get('name')!.touched &&
+            newPersonForm.get('name')!.value === ''
+        }"
+      />
+    </div>
+
+    <div class="form-group">
+      <label>Phone number: </label>
+      <input
+        class="input-field"
+        type="text"
+        formControlName="phoneNumber"
+        [ngClass]="{
+          errorCSS:
+            newPersonForm.get('phoneNumber')!.touched &&
+            newPersonForm.get('phoneNumber')!.value === ''
+        }"
+      />
+    </div>
+
+    <div class="form-group">
+      <label>Email address: </label>
+      <input
+        class="input-field"
+        type="text"
+        formControlName="emailAddress"
+        [ngClass]="{
+          errorCSS:
+            newPersonForm.get('emailAddress')!.touched &&
+            newPersonForm.get('emailAddress')!.value === ''
+        }"
+      />
+    </div>
+
+    <div align="center">
+      <button
+        (click)="submit()"
+        [disabled]="this.newPersonForm.invalid"
+        style="margin-right: 20px"
+      >
+        Add
+      </button>
+      <button (click)="goBack()" style="background-color: #ff8b97">
+        Go back
+      </button>
+    </div>
+
+    <p
+      align="center"
+      style="color: red"
+      *ngIf="
+        newPersonForm.get('dni')!.touched &&
+        newPersonForm.get('name')!.touched &&
+        newPersonForm.get('phoneNumber')!.touched &&
+        newPersonForm.get('emailAddress')!.touched &&
+        (newPersonForm.get('dni')!.value === '' ||
+          newPersonForm.get('name')!.value === '' ||
+          newPersonForm.get('phoneNumber')!.value === '' ||
+          newPersonForm.get('emailAddress')!.value === '')
+      "
+    >
+      Please fill in all the fields in the form.
+    </p>
+  </form>
+</div>

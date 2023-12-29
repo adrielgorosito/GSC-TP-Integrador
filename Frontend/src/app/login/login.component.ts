@@ -15,31 +15,30 @@ export class LoginComponent {
     private us: UserService,
     private router: Router
   ) {}
-  // borrar personService, eso se haría en otro .ts
 
   loginForm = this.fb.group({
     user: ['', Validators.required],
     password: ['', Validators.required],
   });
 
-  submit() {
-    if (!this.loginForm.invalid) {
-      const user = new User(
-        this.loginForm.get('user')!.value!,
-        this.loginForm.get('password')!.value!
-      );
+  protected submit() {
+    if (this.loginForm.invalid) this.router.navigate(['/error-crud']);
 
-      const observer = {
-        next: (token: string) => {
-          localStorage.setItem('token', token);
-          this.router.navigate(['/people-crud']);
-        },
-        error: (error: any) => {
-          this.router.navigate(['/error-crud']);
-        },
-      };
+    const user = new User(
+      this.loginForm.get('user')!.value!,
+      this.loginForm.get('password')!.value!
+    );
 
-      this.us.getToken(user).subscribe(observer);
-    }
+    const observer = {
+      next: (token: string) => {
+        localStorage.setItem('token', token);
+        this.router.navigate(['/people-crud']);
+      },
+      error: (error: any) => {
+        this.router.navigate(['/error-crud']);
+      },
+    };
+
+    this.us.getToken(user).subscribe(observer);
   }
 }

@@ -7,6 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { PeopleCRUDComponent } from './people-crud/people-crud.component';
 import { ErrorComponent } from './error/error.component';
+import { AddUpdatePersonComponent } from './add-update-person/add-update-person.component';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import { ErrorComponent } from './error/error.component';
     LoginComponent,
     PeopleCRUDComponent,
     ErrorComponent,
+    AddUpdatePersonComponent,
   ],
   imports: [
     BrowserModule,

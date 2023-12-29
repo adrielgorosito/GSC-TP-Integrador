@@ -11,20 +11,10 @@ import { Router } from '@angular/router';
 export class PeopleCRUDComponent {
   constructor(private ps: PersonService, private router: Router) {}
 
-  people: Person[] = [];
-  dataLoaded: boolean = false;
-  listPeople: boolean = true;
-  isSearching: boolean = false;
-  dniInput: number = 0;
-
-  startSearch() {
-    this.isSearching = true;
-  }
-
-  cancelSearch() {
-    this.isSearching = false;
-    this.getAllPeople();
-  }
+  protected people: Person[] = [];
+  protected listPeople: boolean = true;
+  protected isSearching: boolean = false;
+  protected dniInput: number = 0;
 
   ngOnInit() {
     this.listPeople = true;
@@ -47,10 +37,16 @@ export class PeopleCRUDComponent {
     this.ps.getAllPeople().subscribe(observer);
   }
 
+  // Search by dni
   searchByDni() {
     if (!isNaN(this.dniInput)) {
       this.getPersonByDni(this.dniInput);
     }
+  }
+
+  cancelSearch() {
+    this.isSearching = false;
+    this.getAllPeople();
   }
 
   protected getPersonByDni(dni: number) {
@@ -73,36 +69,18 @@ export class PeopleCRUDComponent {
     this.ps.getPersonByDni(dni).subscribe(observer);
   }
 
-  protected addPerson() {
-    // if (localStorage.getItem('token') == null)
-    //   this.router.navigate(['/error-crud']);
-    // const observer = {
-    //   next: (data: Person) => {
-    //     // ???
-    //     const addedPerson: Person = data;
-    //   },
-    //   error: (error: any) => {
-    //     console.error('Error adding person:', error);
-    //   },
-    // };
-    // this.ps.addPerson(person).subscribe(observer);
-    //
-    /* maybe I can use: <router-outlet></router-outlet>*/
+  // Delete
+  confirmedDeletions: number[] = [];
+
+  deletePersonConfirmation(person: Person) {
+    this.confirmedDeletions.push(person.dni);
   }
 
-  protected updatePerson(person: Person) {
-    if (localStorage.getItem('token') == null)
-      this.router.navigate(['/error-crud']);
-
-    const observer = {
-      next: (data: Person) => {
-        // apply logic
-        const updatedPerson: Person = data;
-      },
-      error: (error: any) => {
-        console.error('Error updating person:', error);
-      },
-    };
+  confirmDelete(person: Person) {
+    this.deletePerson(person);
+    this.confirmedDeletions = this.confirmedDeletions.filter(
+      (dni) => dni !== person.dni
+    );
   }
 
   protected deletePerson(person: Person) {
@@ -121,23 +99,18 @@ export class PeopleCRUDComponent {
     this.ps.deletePerson(person.dni).subscribe(observer);
   }
 
-  // Confirm delete
-  confirmedDeletions: number[] = [];
-
-  deletePersonConfirmation(person: Person) {
-    this.confirmedDeletions.push(person.dni);
-  }
-
-  confirmDelete(person: Person) {
-    this.deletePerson(person);
-    this.confirmedDeletions = this.confirmedDeletions.filter(
-      (dni) => dni !== person.dni
-    );
-  }
-
   cancelDelete(person: Person) {
     this.confirmedDeletions = this.confirmedDeletions.filter(
       (dni) => dni !== person.dni
     );
+  }
+
+  goToAddUpdate() {
+    this.router.navigate(['/add-update-person']);
+  }
+
+  logout() {
+    localStorage.removeItem('token');
+    this.router.navigate(['/login']);
   }
 }

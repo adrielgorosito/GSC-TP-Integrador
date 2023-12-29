@@ -1,6 +1,6 @@
 <div class="center-container">
   <div class="container">
-    <ng-container *ngIf="people.length > 0 || listPeople; else noPeople">
+    <ng-container *ngIf="listPeople; else noPeople">
       <h2>List of people</h2>
       <div id="table-wrapper">
         <div id="table-scroll">
@@ -57,7 +57,7 @@
       <div class="button-container">
         <button
           class="button-cont"
-          (click)="this.listPeople = false"
+          (click)="goToAddUpdate()"
           style="margin-top: 20px"
         >
           Add new person
@@ -65,7 +65,7 @@
         <button
           class="button-cont"
           *ngIf="!isSearching"
-          (click)="startSearch()"
+          (click)="this.isSearching = true"
           style="margin-top: 20px"
         >
           Search by dni
@@ -93,6 +93,9 @@
 <ng-template #noPeople>
   <div class="no-ppl-container">
     <p>There are no people added.</p>
-    <button>Add a person</button>
+    <button style="margin-bottom: 15px" (click)="goToAddUpdate()">
+      Add a person
+    </button>
+    <button (click)="logout()" style="background-color: #ff8b97">Logout</button>
   </div>
 </ng-template>
