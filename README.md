@@ -50,7 +50,7 @@ Finalmente opté por usar el modelo de dominio propuesto, agregándole a cada en
 
 ## El curso
 Fueron 20 clases sincrónicas (de 3 horas cada una) y dos meses y medio de mucho aprendizaje. 
-En lo personal, completar este curso fue muy desafiente, más que nada por las últimas semanas de cursado y la junta de parciales. 
+En lo personal, completar este curso fue muy desafiante, más que nada por las últimas semanas de cursado y el rejunte de parciales, así cómo también tener la tarea de aprender nuevos lenguajes de programación. 
 Quiero agradecer a los profesores:
 - Luciano Diamand (profesor de frontend).
 - Héctor Stessens (profesor de backend).
