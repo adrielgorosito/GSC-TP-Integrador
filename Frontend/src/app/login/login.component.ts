@@ -31,7 +31,7 @@ export class LoginComponent {
 
       const observer = {
         next: (token: string) => {
-          // guardar token
+          localStorage.setItem('token', token);
           this.router.navigate(['/people-crud']);
         },
         error: (error: any) => {

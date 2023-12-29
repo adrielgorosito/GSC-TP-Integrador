@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Person } from '../person';
+import { PersonService } from '../person.service';
 
 @Component({
   selector: 'app-people-crud',
@@ -7,23 +8,31 @@ import { Person } from '../person';
   styleUrls: ['./people-crud.component.css'],
 })
 export class PeopleCRUDComponent {
+  constructor(private ps: PersonService) {}
+
   people: Person[] = [];
+  dataLoaded: boolean = false;
 
   ngOnInit(): void {
-    this.initializePeople();
+    const observer = {
+      next: (data: Person[]) => {
+        this.people = data;
+      },
+      error: (error: any) => {
+        console.error('Error fetching people:', error);
+      },
+    };
+
+    this.ps.getAllPeople().subscribe(observer);
   }
 
-  initializePeople() {
-    this.people = [
-      new Person(123456789, 'John Doe', '555-1234', 'john@example.com'),
-      new Person(987654321, 'Jane Smith', '555-5678', 'jane@example.com'),
-    ];
-  }
-
-  deletePerson(_t18: any) {
+  deletePerson(person: Person) {
     throw new Error('Method not implemented.');
   }
-  updatePerson(_t18: any) {
+  updatePerson(person: Person) {
+    throw new Error('Method not implemented.');
+  }
+  addPerson() {
     throw new Error('Method not implemented.');
   }
 }

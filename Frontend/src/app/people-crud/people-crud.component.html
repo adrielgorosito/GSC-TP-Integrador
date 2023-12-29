@@ -1,29 +1,42 @@
 <div class="center-container">
   <div class="container">
-    <h2>Welcome</h2>
+    <ng-container *ngIf="people.length > 0; else noPeople">
+      <h2>List of people</h2>
+      <div id="table-wrapper">
+        <div id="table-scroll">
+          <table class="table spaced-table">
+            <thead>
+              <tr>
+                <th>DNI</th>
+                <th>Name</th>
+                <th>Phone Number</th>
+                <th>Email Address</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let person of people">
+                <td>{{ person.dni }}</td>
+                <td>{{ person.name }}</td>
+                <td>{{ person.phoneNumber }}</td>
+                <td>{{ person.emailAddress }}</td>
+                <td>
+                  <button (click)="updatePerson(person)">Update</button>
+                  <button (click)="deletePerson(person)">Delete</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <button class="button-cont">Add new person</button>
+    </ng-container>
 
-    <table class="table spaced-table">
-      <thead>
-        <tr>
-          <th>DNI</th>
-          <th>Name</th>
-          <th>Phone Number</th>
-          <th>Email Address</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let person of people">
-          <td>{{ person.dni }}</td>
-          <td>{{ person.name }}</td>
-          <td>{{ person.phoneNumber }}</td>
-          <td>{{ person.emailAddress }}</td>
-          <td>
-            <button (click)="updatePerson(person)">Update</button>
-            <button (click)="deletePerson(person)">Delete</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <ng-template #noPeople>
+      <div>
+        <p>There are no people added.</p>
+        <button (click)="addPerson()">Add a person</button>
+      </div>
+    </ng-template>
   </div>
 </div>
