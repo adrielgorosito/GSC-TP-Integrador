@@ -15,6 +15,7 @@ export class PeopleCRUDComponent {
   dataLoaded: boolean = false;
   listPeople: boolean = true;
   isSearching: boolean = false;
+  dniInput: number = 0;
 
   startSearch() {
     this.isSearching = true;
@@ -22,6 +23,7 @@ export class PeopleCRUDComponent {
 
   cancelSearch() {
     this.isSearching = false;
+    this.getAllPeople();
   }
 
   ngOnInit() {
@@ -36,10 +38,6 @@ export class PeopleCRUDComponent {
     const observer = {
       next: (data: Person[]) => {
         this.people = data;
-        this.people.push(
-          new Person(123456789, 'John Doe', '555-1234', 'john@example.com'),
-          new Person(987654321, 'Jane Smith', '555-5678', 'jane@example.com')
-        );
       },
       error: (error: any) => {
         console.error('Error fetching people:', error);
@@ -49,13 +47,23 @@ export class PeopleCRUDComponent {
     this.ps.getAllPeople().subscribe(observer);
   }
 
+  searchByDni() {
+    if (!isNaN(this.dniInput)) {
+      this.getPersonByDni(this.dniInput);
+    }
+  }
+
   protected getPersonByDni(dni: number) {
     if (localStorage.getItem('token') == null)
       this.router.navigate(['/error-crud']);
 
+    this.people = [];
+    this.listPeople = true;
+
     const observer = {
       next: (data: Person) => {
-        // apply logic
+        this.people = [];
+        this.people.push(data);
       },
       error: (error: any) => {
         console.error('Error fetching person by DNI:', error);
@@ -64,6 +72,7 @@ export class PeopleCRUDComponent {
 
     this.ps.getPersonByDni(dni).subscribe(observer);
   }
+
   protected addPerson() {
     // if (localStorage.getItem('token') == null)
     //   this.router.navigate(['/error-crud']);
@@ -102,7 +111,7 @@ export class PeopleCRUDComponent {
 
     const observer = {
       next: (data: Person) => {
-        this.people = this.people.filter((p) => p.dni != person.dni);
+        this.getAllPeople();
       },
       error: (error: any) => {
         console.error('Error deleting person:', error);

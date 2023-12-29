@@ -1,6 +1,6 @@
 <div class="center-container">
   <div class="container">
-    <ng-container *ngIf="people.length > 0 && listPeople; else noPeople">
+    <ng-container *ngIf="people.length > 0 || listPeople; else noPeople">
       <h2>List of people</h2>
       <div id="table-wrapper">
         <div id="table-scroll">
@@ -75,8 +75,9 @@
             type="text"
             placeholder="Enter DNI"
             style="margin-left: 20px"
+            [(ngModel)]="dniInput"
           />
-          <button class="srch-button">✔️</button>
+          <button class="srch-button" (click)="searchByDni()">✔️</button>
           <button
             class="cncl-srch-button cancel-button"
             (click)="cancelSearch()"
