@@ -29,13 +29,16 @@
           </table>
         </div>
       </div>
-      <button class="button-cont">Add new person</button>
+      <div class="button-container">
+        <button class="button-cont">Add new person</button>
+        <button class="button-cont">Search by dni</button>
+      </div>
     </ng-container>
 
     <ng-template #noPeople>
       <div>
         <p>There are no people added.</p>
-        <button (click)="addPerson()">Add a person</button>
+        <button>Add a person</button>
       </div>
     </ng-template>
   </div>
