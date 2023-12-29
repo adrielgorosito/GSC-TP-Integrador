@@ -13,8 +13,19 @@ export class PeopleCRUDComponent {
 
   people: Person[] = [];
   dataLoaded: boolean = false;
+  listPeople: boolean = true;
+  isSearching: boolean = false;
 
-  ngOnInit(): void {
+  startSearch() {
+    this.isSearching = true;
+  }
+
+  cancelSearch() {
+    this.isSearching = false;
+  }
+
+  ngOnInit() {
+    this.listPeople = true;
     this.getAllPeople();
   }
 
@@ -25,6 +36,10 @@ export class PeopleCRUDComponent {
     const observer = {
       next: (data: Person[]) => {
         this.people = data;
+        this.people.push(
+          new Person(123456789, 'John Doe', '555-1234', 'john@example.com'),
+          new Person(987654321, 'Jane Smith', '555-5678', 'jane@example.com')
+        );
       },
       error: (error: any) => {
         console.error('Error fetching people:', error);
@@ -49,8 +64,7 @@ export class PeopleCRUDComponent {
 
     this.ps.getPersonByDni(dni).subscribe(observer);
   }
-
-  protected addPerson(person: Person) {
+  protected addPerson() {
     // if (localStorage.getItem('token') == null)
     //   this.router.navigate(['/error-crud']);
     // const observer = {
@@ -88,12 +102,33 @@ export class PeopleCRUDComponent {
 
     const observer = {
       next: (data: Person) => {
-        // apply logic
-        const deletedPerson: Person = data;
+        this.people = this.people.filter((p) => p.dni != person.dni);
       },
       error: (error: any) => {
         console.error('Error deleting person:', error);
       },
     };
+
+    this.ps.deletePerson(person.dni).subscribe(observer);
+  }
+
+  // Confirm delete
+  confirmedDeletions: number[] = [];
+
+  deletePersonConfirmation(person: Person) {
+    this.confirmedDeletions.push(person.dni);
+  }
+
+  confirmDelete(person: Person) {
+    this.deletePerson(person);
+    this.confirmedDeletions = this.confirmedDeletions.filter(
+      (dni) => dni !== person.dni
+    );
+  }
+
+  cancelDelete(person: Person) {
+    this.confirmedDeletions = this.confirmedDeletions.filter(
+      (dni) => dni !== person.dni
+    );
   }
 }

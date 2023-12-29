@@ -7,6 +7,17 @@
   font-family: arial;
 }
 
+.no-ppl-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 10vh;
+  font-family: arial;
+  border-radius: 8px;
+  padding: 20px;
+}
+
 .container {
   background-color: rgba(245, 245, 245, 0.8);
   border-radius: 8px;
@@ -26,9 +37,33 @@ h2 {
 
 .button-cont {
   display: inline-block;
-  margin: 20px auto;
-  margin-right: 30px;
   text-align: center;
+}
+
+.upd-del-button {
+  width: 100px;
+}
+
+.del-button,
+.cncl-del-button {
+  font-size: 14px;
+}
+
+.srch-button,
+.cncl-srch-button {
+  padding: 5px 5px;
+}
+
+.cancel-button {
+  background-color: #ff8b97;
+}
+
+input {
+  padding: 5px 5px;
+  margin-right: 5px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 
 button {

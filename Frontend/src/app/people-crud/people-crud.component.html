@@ -1,6 +1,6 @@
 <div class="center-container">
   <div class="container">
-    <ng-container *ngIf="people.length > 0; else noPeople">
+    <ng-container *ngIf="people.length > 0 && listPeople; else noPeople">
       <h2>List of people</h2>
       <div id="table-wrapper">
         <div id="table-scroll">
@@ -21,8 +21,33 @@
                 <td>{{ person.phoneNumber }}</td>
                 <td>{{ person.emailAddress }}</td>
                 <td>
-                  <button (click)="updatePerson(person)">Update</button>
-                  <button (click)="deletePerson(person)">Delete</button>
+                  <button
+                    class="upd-del-button"
+                    (click)="this.listPeople = false"
+                  >
+                    Update
+                  </button>
+                  <button
+                    class="upd-del-button"
+                    (click)="this.confirmedDeletions.push(person.dni)"
+                    *ngIf="!confirmedDeletions.includes(person.dni)"
+                  >
+                    Delete
+                  </button>
+                  <div
+                    class="button-cont"
+                    *ngIf="confirmedDeletions.includes(person.dni)"
+                  >
+                    <button class="del-button" (click)="confirmDelete(person)">
+                      ✔️
+                    </button>
+                    <button
+                      class="cncl-del-button cancel-button"
+                      (click)="cancelDelete(person)"
+                    >
+                      ❌
+                    </button>
+                  </div>
                 </td>
               </tr>
             </tbody>
@@ -30,16 +55,43 @@
         </div>
       </div>
       <div class="button-container">
-        <button class="button-cont">Add new person</button>
-        <button class="button-cont">Search by dni</button>
+        <button
+          class="button-cont"
+          (click)="this.listPeople = false"
+          style="margin-top: 20px"
+        >
+          Add new person
+        </button>
+        <button
+          class="button-cont"
+          *ngIf="!isSearching"
+          (click)="startSearch()"
+          style="margin-top: 20px"
+        >
+          Search by dni
+        </button>
+        <div class="button-cont" *ngIf="isSearching">
+          <input
+            type="text"
+            placeholder="Enter DNI"
+            style="margin-left: 20px"
+          />
+          <button class="srch-button">✔️</button>
+          <button
+            class="cncl-srch-button cancel-button"
+            (click)="cancelSearch()"
+          >
+            ❌
+          </button>
+        </div>
       </div>
     </ng-container>
-
-    <ng-template #noPeople>
-      <div>
-        <p>There are no people added.</p>
-        <button>Add a person</button>
-      </div>
-    </ng-template>
   </div>
 </div>
+
+<ng-template #noPeople>
+  <div class="no-ppl-container">
+    <p>There are no people added.</p>
+    <button>Add a person</button>
+  </div>
+</ng-template>
